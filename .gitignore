@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+.env
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruƯ_cache/
+.sagemaker/
+data/
+outputs/
+reports/ 
