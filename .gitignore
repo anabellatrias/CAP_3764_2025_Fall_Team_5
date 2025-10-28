@@ -8,6 +8,6 @@ __pycache__/
 .pytest_cache/
 .ruƯ_cache/
 .sagemaker/
-data/**/*
+data/**/*.tmp
 outputs/
 reports/ 
