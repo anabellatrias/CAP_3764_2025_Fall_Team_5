@@ -322,7 +322,7 @@ def build_features(data_dir='../data/raw',
         DataFrame with all features and target
     """
     
-    # === STEP 1: Load all DAILY market data ===
+    # STEP 1: Load all DAILY market data
     print("Loading daily market data...")
     
     gold = load_daily_data(f'{data_dir}/Gold Futures Historical Data.csv')
@@ -330,8 +330,6 @@ def build_features(data_dir='../data/raw',
     silver = load_daily_data(f'{data_dir}/Silver Futures Historical Data.csv')
     usd = load_daily_data(f'{data_dir}/USD Index.csv')
     oil = load_daily_data(f'{data_dir}/Spot_Crude_Oil_Price.csv')
-    
-    # FIXED: These are daily FRED data, not monthly
     treasury = load_daily_data(f'{data_dir}/US_Treasury_Yield.csv')
     nasdaq = load_daily_data(f'{data_dir}/NASDAQCOM.csv')
     vix = load_daily_data(f'{data_dir}/VIXCLS.csv')
@@ -341,7 +339,7 @@ def build_features(data_dir='../data/raw',
     print(f"  NASDAQ: {len(nasdaq)} rows")
     print(f"  VIX: {len(vix)} rows")
     
-    # === STEP 2: Standardize column names ===
+    # STEP 2: Standardize column names
     gold = standardize_columns(gold, 'gold')
     sp500 = standardize_columns(sp500, 'sp500')
     silver = standardize_columns(silver, 'silver')
@@ -356,7 +354,7 @@ def build_features(data_dir='../data/raw',
     print(f"  NASDAQ: {[c for c in nasdaq.columns if c != 'date']}")
     print(f"  VIX: {[c for c in vix.columns if c != 'date']}")
     
-    # === STEP 3: Merge daily data (SMART STRATEGY) ===
+    # STEP 3: Merge daily data (SMART STRATEGY)
     print("\nMerging daily datasets...")
     
     # Get actual column names (they vary by file)
@@ -402,15 +400,15 @@ def build_features(data_dir='../data/raw',
     # Forward-fill any NaN values from supplementary data
     for col in ['usd_index_value', 'treasury_yield', 'nasdaq_value', 'vix_value', 'oil_price']:
         if col in df.columns:
-            df[col] = df[col].ffill().bfill()  # Fill forward, then backward for early dates
+            df[col] = df[col].ffill().bfill()
     
     print(f"  After merge: {len(df)} rows")
     
-    # === STEP 4: Filter to target date range BEFORE rolling windows ===
+    #STEP 4: Filter to target date range BEFORE rolling windows
     df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
     print(f"  After date filter ({start_date} to {end_date}): {len(df)} rows")
     
-    # === STEP 5: Engineer features on CLEAN daily data ===
+    #STEP 5: Engineer features on CLEAN daily data
     print("\nEngineering features...")
     df = create_returns(df, periods=[5, 20, 60])
     df = create_moving_averages(df, windows=[20])  # Only MA_20 to reduce NaNs
@@ -418,7 +416,7 @@ def build_features(data_dir='../data/raw',
     
     print(f"  After feature engineering: {len(df.columns)} columns")
     
-    # === STEP 6: Load MONTHLY macro data ===
+    #STEP 6: Load MONTHLY macro data
     print("\nLoading monthly macro data...")
     cpi = load_monthly_data(f'{data_dir}/CPI_1947.csv')
     unemployment = load_monthly_data(f'{data_dir}/unemployment.csv')
@@ -431,22 +429,22 @@ def build_features(data_dir='../data/raw',
     fedfunds = standardize_columns(fedfunds, 'fedfunds')
     m2 = standardize_columns(m2, 'm2')
     
-    # === STEP 7: Merge monthly data with forward-fill ===
+    #STEP 7: Merge monthly data with forward-fill
     print("Merging monthly data...")
     df = forward_fill_monthly(df, cpi, 'cpi')
     df = forward_fill_monthly(df, unemployment, 'unemployment')
     df = forward_fill_monthly(df, fedfunds, 'fedfunds')
     df = forward_fill_monthly(df, m2, 'm2')
     
-    # === STEP 8: Create derived macro features ===
+    #STEP 8: Create derived macro features
     print("Creating derived macro features...")
     df = create_macro_features(df)
     
-    # === STEP 9: Create target variable ===
+    #STEP 9: Create target variable
     print("Creating target variable...")
     df = create_target(df, horizon=target_horizon, method='outperform_sp500')
     
-    # === STEP 10: Final cleanup ===
+    #STEP 10: Final cleanup
     df = df.dropna(subset=['target'])  # Remove rows without valid target
     
 
