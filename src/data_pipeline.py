@@ -143,7 +143,6 @@ def forward_fill_monthly(daily_df, monthly_df, prefix):
     
     return merged
 
-
 def create_returns(df, periods=[5, 20, 60]):
     """
     Calculate returns over multiple periods.
