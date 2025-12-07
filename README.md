@@ -10,7 +10,7 @@ This project builds a binary classification model that predicts whether gold wil
 
 The goal is to explore feature engineering, time-series modeling, and evaluation strategies for tactical asset-allocation signals.
 
-⸻
+---
 
 Project Structure
 
@@ -49,7 +49,7 @@ Gold outperforms the S&P 500 over the next 90 days (1 if true, 0 otherwise).
 Type:
 Binary classification on time-dependent data.
 
-⸻
+---
 
 Feature Engineering
 
@@ -73,7 +73,7 @@ Target Construction
 	•	90-day forward relative return:
 gold_future_return - sp500_future_return
 
-⸻
+---
 
 Exploratory Analysis
 
@@ -82,7 +82,7 @@ Key patterns identified:
 	•	Increasing VIX, falling yields, and USD volatility strongly correlate with gold outperformance.
 	•	Distribution shapes vary significantly pre- and post-2013.
 
-⸻
+---
 
 Modeling Approach
 
@@ -105,13 +105,13 @@ Logistic Regression (balanced):
 	•	Precision: 59.2%
 	•	Prioritizes recall to maximize signal detection in tactical allocation strategies.
 
-⸻
+---
 
 In-Progress Work
 	•	Benchmarking with PyCaret to compare automated ML workflows against manual baselines
   •	Creation of Streamlit/FastAPI dashboard 
 
-⸻
+---
 
 Tech Stack
 	•	Python (pandas, NumPy, scikit-learn)
