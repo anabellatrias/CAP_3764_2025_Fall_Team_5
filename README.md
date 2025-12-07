@@ -4,7 +4,7 @@ Team 5: Anabella Trias and Anthony Sierra
 
 Predicting 90-day gold outperformance using macroeconomic time-series data (2006–2024)
 
-🔍 Overview
+Overview
 
 This project builds a binary classification model that predicts whether gold will outperform the S&P 500 over a 90-day horizon, using 18 years of macroeconomic and financial indicators.
 
