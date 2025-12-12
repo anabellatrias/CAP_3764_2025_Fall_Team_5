@@ -54,9 +54,23 @@ with tab1:
             
             # Show result
             st.success("Prediction Complete!")
+
             st.subheader(result["winner"])
-            st.metric("Probability", result["probability"])
-            
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.metric(
+                    label="Gold Outperformance Probability",
+                    value=result["probability_gold"]
+                )
+
+            with col2:
+                st.metric(
+                    label="Stocks Outperformance Probability",
+                    value=result["probability_stocks"]
+                )
+                
         except Exception as e:
             st.error("Error: Make sure the API is running!")
             st.code("python api.py")

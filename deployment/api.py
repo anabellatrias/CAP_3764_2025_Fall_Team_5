@@ -13,7 +13,7 @@ app = FastAPI(title="Gold Predictor API")
 # Load model
 MODEL_PATH = Path("../models/gold_predictor_pipeline.pkl")
 model = joblib.load(MODEL_PATH)
-feature_names = joblib.load(Path("models/feature_names.pkl"))
+feature_names = joblib.load(Path("../models/feature_names.pkl"))
 
 # Input schema
 class PredictionInput(BaseModel):
@@ -44,11 +44,13 @@ def predict(data: PredictionInput):
     
     # Make prediction
     prediction = int(model.predict(df)[0])
-    probability = float(model.predict_proba(df)[0][1])
-    
+
+    proba = model.predict_proba(df)[0]
+
     return {
         "prediction": "Gold" if prediction == 1 else "Stocks",
-        "probability": f"{probability:.1%}",
+        "probability_gold": f"{proba[1]:.1%}",
+        "probability_stocks": f"{proba[0]:.1%}",
         "winner": "Gold will outperform" if prediction == 1 else "Stocks will outperform"
     }
 
