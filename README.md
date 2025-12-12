@@ -224,13 +224,15 @@ We used stratified K-fold CV as implemented by PyCaret. For future improvements,
 
 **Extra Trees Classifier (Tuned):**
 
-| Metric | Cross-Validation | Test Set |
-|--------|-----------------|----------|
-| ROC AUC | 0.964 ± 0.007 | 0.775 |
-| Accuracy | 89.1% | 78.2% |
-| Precision | 89.8% | 76.5% |
-| Recall | 84.1% | 79.8% |
-| F1 Score | 86.8% | 78.1% |
+| Metric | Cross-Validation (10-fold) |
+|--------|---------------------------|
+| ROC AUC | 0.9897 ± 0.007 |
+| Accuracy | 95.1% |
+| Precision | 94.0% |
+| Recall | 94.7% |
+| F1 Score | 94.3% |
+
+**Note:** Test set performance showed perfect classification (AUC = 1.0), indicating potential data leakage. Cross-validation metrics are more reliable for evaluating model performance.
 
 **Why Extra Trees?**
 - Handles non-linear relationships between features
