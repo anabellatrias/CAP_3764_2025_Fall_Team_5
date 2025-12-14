@@ -29,9 +29,13 @@ cd CAP_3764_2025_Fall_Team_5-5
 conda env create -f gold_prediction_environment.yml
 conda activate gold_predictor
 
-# 3. Install additional dependencies
-pip install -r requirements.txt
-```
+# 3. Run all Notebooks
+
+# 4. Run api.py file
+python api.py
+
+# 5. Run streamlit app
+streamlit run app.py
 
 ### Run the Analysis Pipeline
 
